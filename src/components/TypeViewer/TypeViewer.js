@@ -18,7 +18,7 @@ const TypeViewerContainer = styled.section `
 
 
 const H1 = styled.h1 `
-  font-family: sarif;
+  font-family: ${(props)=>props.fontFamily};
   font-size: 50px;
   margin:0 0 30px 0;
   font-weight: bold;
@@ -26,7 +26,7 @@ const H1 = styled.h1 `
 `;
 
 const H2 = styled.h2 `
-  font-family: sarif;
+  font-family: ${(props)=>props.fontFamily};
   margin:0 0 30px 0;
   font-size: 40px;
   font-weight: bold;
@@ -34,7 +34,7 @@ const H2 = styled.h2 `
 `;
 
 const P = styled.p `
-  font-family: sans-serif;
+  font-family: ${(props)=>props.fontFamily};
   font-size: 14px;
   line-height: 24px;
   margin:0 0 50px 0;
@@ -50,13 +50,13 @@ class TypeViewer extends Component {
 
     return (
       <TypeViewerContainer>
-        <H1>H1 - Main Heading</H1>
-        <P>Welcome to The Type Nugget Beta - the online typesetting tool that will eventually make all of your online typesetting dreams come true. Configure some properties in the panel on the right and it’ll change this preview text live in browser (also go ahead and type in these paragraphs; it’s all content-editable).
+        <H1 fontFamily={this.props.headerFontFamily}>H1 - Main Heading</H1>
+        <P fontFamily={this.props.normalFontFamily}>Welcome to The Type Nugget Beta - the online typesetting tool that will eventually make all of your online typesetting dreams come true. Configure some properties in the panel on the right and it’ll change this preview text live in browser (also go ahead and type in these paragraphs; it’s all content-editable).
 
         Click ‘Generate Code’ to generate a tidy, accessible CSS stylesheet that you can implement with zero fiddling. Spending less time manually coding and more time swiftly creating hella fine web type painlessly via a pleasant user interface? I don’t know about you, but I am all about that life.
         Create a free account and This is the Link you generate, so when you login you can pick up where you left off.</P>
-      <H2>H2 - The spectacle before us was indeed sublime</H2>
-        <P>Welcome to The Type Nugget Beta - the online typesetting tool that will eventually make all of your online typesetting dreams come true. Configure some properties in the panel on the right and it’ll change this preview text live in browser (also go ahead and type in these paragraphs; it’s all content-editable).
+      <H2 fontFamily={this.props.headerFontFamily}>H2 - The spectacle before us was indeed sublime</H2>
+        <P fontFamily={this.props.normalFontFamily}>Welcome to The Type Nugget Beta - the online typesetting tool that will eventually make all of your online typesetting dreams come true. Configure some properties in the panel on the right and it’ll change this preview text live in browser (also go ahead and type in these paragraphs; it’s all content-editable).
 
         Click ‘Generate Code’ to generate a tidy, accessible CSS stylesheet that you can implement with zero fiddling. Spending less time manually coding and more time swiftly creating hella fine web type painlessly via a pleasant user interface? I don’t know about you, but I am all about that life.
         Create a free account and This is the Link you generate, so when you login you can pick up where you left off.</P>

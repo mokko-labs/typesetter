@@ -16,34 +16,48 @@ const AppWrapper = styled.section`
 `;
 
 class App extends Component {
-  state = {
-    device: 'desktop',
-    primaryColor: '#0D0804', // Headings Color
-    baseColor: '#00B259',  // Background Color
-    textColor: '#114E1B'  // Paragraph / List Color
-  };
+
 
   constructor(props) {
    super(props)
-   this.handler = this.updateBodyColor.bind(this)
+
+   this.state = {
+     device: 'desktop',
+     primaryColor: '#0D0804', // Headings Color
+     baseColor: '#00B259',  // Background Color
+     textColor: '#114E1B',  // Paragraph / List Color
+     headerFontFamily: 'Helvetica Neue, Helvetica, sans-serif',
+     normalFontFamily: 'Verdana'
+   };
+
  }
-
-
 
   applyBodyColor() {
     document.body.style.background = this.state.baseColor;
   }
 
   componentDidMount() {
-    this.applyBodyColor();
+
+    this.updateBodyColor();
   }
 
-  updateBodyColor(val) {
-    console.log('asdas' + val);
-    this.setState({
-      primaryColor: val
-    })
+  updateBodyColor = () => {
     document.body.style.background = this.state.baseColor;
+  }
+
+  handleColorChange = (e) => {
+
+    this.setState({
+      baseColor: e.hex
+    });
+
+    document.body.style.background = e.hex;
+  }
+
+  handleFontChange = (e) => {
+    this.setState({
+      fontFamily: e.fontFamily
+    });
   }
 
   render() {
@@ -54,11 +68,11 @@ class App extends Component {
         <AppWrapper>
         <AppActionsBar activeView={this.state.device} primaryColor={this.state.primaryColor} baseColor={this.state.baseColor} />
         <Line color={this.state.primaryColor} />
-        <TypeViewer primaryColor={this.state.primaryColor} textColor={this.state.textColor} />
+        <TypeViewer headerFontFamily={this.state.headerFontFamily} normalFontFamily={this.state.normalFontFamily} primaryColor={this.state.primaryColor} textColor={this.state.textColor} fontFamily={this.state.fontFamily} />
         <Line color={this.state.primaryColor} />
         </AppWrapper>
 
-        <SettingsPanel primaryColor={this.state.primaryColor} baseColor={this.state.baseColor} />
+        <SettingsPanel onColorChange={this.handleColorChange} onFontChange={this.handleFontChange} primaryColor={this.state.primaryColor} baseColor={this.state.baseColor} />
       </div>
     );
   }

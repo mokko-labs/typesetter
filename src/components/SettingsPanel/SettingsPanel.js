@@ -30,25 +30,40 @@ const SettingsPanelTitle = styled.span `
 
 class SettingsPanel extends Component {
 
-  state = {
-    title: 'Body / Base Style',
-    color: 'black'
-  };
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      title: 'Body / Base Style',
+      color: 'black'
+    };
+  }
 
   componentDidMount() {
     const { baseColor, primaryColor, ...props } = this.props;
     this.setState({ color: baseColor });
   }
 
+  handleColorChange = (e) => {
+    this.setState({
+      color: e.hex
+    });
+    this.props.onColorChange(e);
+  }
+
+  handleFontChange = (e) => {
+
+  }
+
   render() {
     const { handler, baseColor, primaryColor, ...props } = this.props;
-    
+
     return (
       <SettingsPanelWrapper>
         <SettingsPanelTitle>
         {this.state.title}
         </SettingsPanelTitle>
-        <SketchPicker color={ this.state.color }  />
+        <SketchPicker color={ this.state.color } onChange={ this.handleColorChange } />
 
       </SettingsPanelWrapper>
     );
