@@ -1,17 +1,23 @@
 import React, { Component, } from 'react';
+import { connect } from 'react-redux'
 import styled from 'styled-components';
-import { SketchPicker } from 'react-color';
+import Select from 'react-select';
+import axios from 'axios';
 
-const SettingsPanelWrapper = styled.section `
+import ColorPicker from './ColorPicker';
+
+const SettingsPanelWrapper = styled.section`
   padding: 20px 40px;
   text-align: center;
-  display: flex;
   position: fixed;
+  left: 0;
+  z-index: 10;
+  justify-content: space-around;
   bottom:0;
   height:90px;
   width:100%;
   box-shadow: 0px -3px 10px 1px rgba(43, 43, 43, 0.07);
-  background-color: white;  justify-content: center;
+  background-color: white;
   align-items: center;
 
   @media (max-width: 620px) {
@@ -19,13 +25,39 @@ const SettingsPanelWrapper = styled.section `
   }
 `;
 
-const SettingsPanelTitle = styled.span `
+const SettingsPanelTitle = styled.span`
   display:inline-block;
   vertical-align: middle;
-  font-size: 24px;
-  margin-right:50px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 20px;
+  color:black;
+  font-weight: bold;
+  margin-right:80px;
 `;
-
+const InputWrapper = styled.span`
+  display:inline-block;
+  vertical-align: middle;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+const SelectWrapper = styled.span`
+  display:inline-block;
+  text-align: left;
+  vertical-align: middle;
+  width:300px;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+const InputLabel = styled.span`
+  display:block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12px;
+  color:#EE4761;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+`;
 
 
 class SettingsPanel extends Component {
@@ -35,44 +67,92 @@ class SettingsPanel extends Component {
 
     this.state = {
       title: 'Body / Base Style',
-      color: 'black',
+      options: null,
+      selectedValue: null,
       baseColor: '#d9feff'
     };
   }
 
 
-    applyBodyColor() {
-      document.body.style.background = this.state.baseColor;
-    }
+  componentWillMount = () => {
+    this.props.fetchFonts();
+  }
 
-    componentDidMount() {
-      this.updateBodyColor();
+  componentWillReceiveProps = (newProps) => {
+    if(newProps.fontsConfig && newProps.fontsConfig.fetched) {
+      let fontsStack = []
+      for (var index = 0; index < newProps.fontsConfig.fonts.length; index++) {
+        fontsStack.push({ value: newProps.fontsConfig.fonts[index].family, label: newProps.fontsConfig.fonts[index].family });
+      }
+        this.setState({
+          options: fontsStack
+        })
     }
+  }
 
-    updateBodyColor = () => {
-      document.body.style.background = this.state.baseColor;
-    }
-
-    handleColorChange = (e) => {
-      this.setState({
-        baseColor: e.hex
-      });
-      document.body.style.background = e.hex;
-    }
-
+  logChange = (val) => {
+    this.props.updateFonts(val);
+    this.setState({
+      selectedValue: val
+    })
+  }
 
   render() {
 
     return (
       <SettingsPanelWrapper>
         <SettingsPanelTitle>
-        {this.state.title}
+        {this.props.settingsPanel.type}
         </SettingsPanelTitle>
-        <SketchPicker color={ this.state.baseColor } onChange={ this.handleColorChange } />
+        <SelectWrapper>
+          <div className="select-up">
+            <Select
+              name="form-field-name"
+              value={this.state.selectedValue}
+              options={this.state.options}
+              onChange={this.logChange}
+            />
+          </div>
+        </SelectWrapper>
+        <InputWrapper>
+          <InputLabel>
+            COLOR
+          </InputLabel>
+          <ColorPicker color={this.props.baseConfig.color} element='BASE' />
+        </InputWrapper>
+        <InputWrapper>
+          <InputLabel>
+            BACKGROUND COLOR
+          </InputLabel>
+          <ColorPicker color={this.props.baseConfig.backgroundColor} element='BASE_BACKGROUND' />
+        </InputWrapper>
+
 
       </SettingsPanelWrapper>
     );
   }
 }
 
-export default SettingsPanel;
+const mapStateToProps = state => {
+  return {
+    baseConfig: state.baseConfig,
+    settingsPanel: state.settingsPanel,
+    fontsConfig: state.fontsConfig
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      fetchFonts: () => dispatch({
+        type: "LOAD_FONTS",
+        payload: axios('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyB8mBlgFY3rx_1xc2KXQEptAf0Nudt2HkA&sort=popularity')
+      }),
+      updateFonts: (payload) => dispatch({
+        type: 'UPDATE_FONT_H1',
+        payload: payload
+      })
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPanel)

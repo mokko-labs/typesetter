@@ -1,10 +1,13 @@
 
-const INITIAL_STATE = 'SETTING_BASE'
+const INITIAL_STATE = {
+  type: 'Body/Base',
+}
 
-const settingsPanel = (state = INITIAL_STATE, action) => {
+export const settingsPanel = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'H1':
-      return 'SETTING_H1'
+    case 'CHANGE_TYPE':
+      return Object.assign({}, state, {type: action.payload})
+      break;
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux'
 import styled from 'styled-components';
-import { Logo, DeviceControls } from '../components';
+import { Logo, DeviceControls } from '../components/Common';
 
 
 const HeaderContainer = styled.section`
@@ -9,6 +9,12 @@ const HeaderContainer = styled.section`
   text-align: center;
   display: flex;
   background: white;
+  position: fixed;
+  z-index: 10;
+  left:0;
+  top:0;
+  width:100%;
+
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 3px 10px 1px rgba(43, 43, 43, 0.07);
@@ -17,6 +23,7 @@ const HeaderContainer = styled.section`
     flex-direction: column;
   }
 `;
+
 const LogoContainer = styled.span`
   display:inline-block;
   margin-top: 5px;
