@@ -10,8 +10,8 @@ const SettingsPanelWrapper = styled.section `
   bottom:0;
   height:90px;
   width:100%;
-  background: white;
-  justify-content: center;
+  box-shadow: 0px -3px 10px 1px rgba(43, 43, 43, 0.07);
+  background-color: white;  justify-content: center;
   align-items: center;
 
   @media (max-width: 620px) {
@@ -35,35 +35,40 @@ class SettingsPanel extends Component {
 
     this.state = {
       title: 'Body / Base Style',
-      color: 'black'
+      color: 'black',
+      baseColor: '#d9feff'
     };
   }
 
-  componentDidMount() {
-    const { baseColor, primaryColor, ...props } = this.props;
-    this.setState({ color: baseColor });
-  }
 
-  handleColorChange = (e) => {
-    this.setState({
-      color: e.hex
-    });
-    this.props.onColorChange(e);
-  }
+    applyBodyColor() {
+      document.body.style.background = this.state.baseColor;
+    }
 
-  handleFontChange = (e) => {
+    componentDidMount() {
+      this.updateBodyColor();
+    }
 
-  }
+    updateBodyColor = () => {
+      document.body.style.background = this.state.baseColor;
+    }
+
+    handleColorChange = (e) => {
+      this.setState({
+        baseColor: e.hex
+      });
+      document.body.style.background = e.hex;
+    }
+
 
   render() {
-    const { handler, baseColor, primaryColor, ...props } = this.props;
 
     return (
       <SettingsPanelWrapper>
         <SettingsPanelTitle>
         {this.state.title}
         </SettingsPanelTitle>
-        <SketchPicker color={ this.state.color } onChange={ this.handleColorChange } />
+        <SketchPicker color={ this.state.baseColor } onChange={ this.handleColorChange } />
 
       </SettingsPanelWrapper>
     );

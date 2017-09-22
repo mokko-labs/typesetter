@@ -1,11 +1,7 @@
-import Header from './Header/Header';
-import AppActionsBar from './AppActionsBar/AppActionsBar';
-import TypeViewer from './TypeViewer/TypeViewer';
-import SettingsPanel from './SettingsPanel/SettingsPanel';
+import Logo from './Logo';
+import DeviceControls from './DeviceControls'
 
 export {
-  Header,
-  AppActionsBar,
-  TypeViewer,
-  SettingsPanel
+  Logo,
+  DeviceControls
 };

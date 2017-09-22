@@ -1,25 +1,17 @@
-import React, { Component, } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import styled from 'styled-components';
 
-const ActionBarContainer = styled.section `
-  padding: 20px 0px;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  @media (max-width: 620px) {
-    flex-direction: column;
-  }
-`;
-
-const ResponsiveControls = styled.span `
+const IconButton = styled.span`
   display:inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 
 const IconImac = ({ color, active }) =>
-
-  <span style={{display:'inline-block', verticalAlign: 'bottom', marginRight: '20px', opacity: active === 'desktop' ? 1 : 0.5  }}>
+  <span style={{opacity: active === 'DESKTOP' ? 1 : 0.3  }}>
     <svg width="38px" height="33px" viewBox="0 0 38 33" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g transform="translate(-194.000000, -126.000000)" fillRule="nonzero" fill={color}>
@@ -32,7 +24,7 @@ const IconImac = ({ color, active }) =>
   </span>;
 
 const IconTablet = ({ color, active }) =>
-  <span style={{display:'inline-block', verticalAlign: 'bottom', marginRight: '20px', opacity: active === 'tablet' ? 1 : 0.5 }}>
+  <span style={{opacity: active === 'TABLET' ? 1 : 0.3 }}>
     <svg width="22px" height="27px" viewBox="0 0 22 28" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g transform="translate(-256.000000, -131.000000)" fillRule="nonzero" fill={color}>
@@ -45,7 +37,7 @@ const IconTablet = ({ color, active }) =>
   </span>;
 
 const IconPhone = ({ color, active }) =>
-  <span style={{display:'inline-block', verticalAlign: 'bottom', opacity: active === 'phone' ? 1 : 0.5 }}>
+  <span style={{opacity: active === 'MOBILE' ? 1 : 0.3 }}>
     <svg width="11px" height="27px" style={{display:'inline-block', verticalAlign: 'bottom'}} viewBox="0 0 11 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
             <g transform="translate(-302.000000, -136.000000)" fillRule="nonzero" fill={color}>
@@ -58,21 +50,38 @@ const IconPhone = ({ color, active }) =>
   </span>;
 
 
-class AppActionsBar extends Component {
+class DeviceControls extends Component {
 
   render() {
-    const { activeView, primaryColor, ...props } = this.props;
-
+    const { activeDevice, updateDevice } = this.props;
     return (
-      <ActionBarContainer>
-        <ResponsiveControls>
-          <IconImac color={primaryColor} active={activeView}  />
-          <IconTablet color={primaryColor} active={activeView} />
-          <IconPhone color={primaryColor} active={activeView} />
-        </ResponsiveControls>
-      </ActionBarContainer>
+      <span style={{ display: 'inline-block'}}>
+        <IconButton onClick={()=>updateDevice('DESKTOP')}>
+          <IconImac color="black" active={activeDevice}  />
+        </IconButton>
+        <IconButton onClick={()=>updateDevice('TABLET')}>
+          <IconTablet color="black" active={activeDevice} />
+        </IconButton>
+        <IconButton onClick={()=>updateDevice('MOBILE')}>
+          <IconPhone color="black" active={activeDevice} />
+        </IconButton>
+      </span>
     );
   }
 }
 
-export default AppActionsBar;
+
+const mapStateToProps = (state) => {
+  return {
+    activeDevice: state.activeDevice
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateDevice: (type) => dispatch({
+      type: "CHANGE_DEVICE",
+      payload: type
+    })
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(DeviceControls)
