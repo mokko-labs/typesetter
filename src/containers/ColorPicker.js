@@ -53,8 +53,11 @@ class Header extends Component {
     }
   }
 
-  componentWillReceiveNewProps(newProps) {
-    if(this.props.color !== newProps.coor) {
+  componentWillReceiveProps(newProps) {
+    if(this.props.element !== newProps.element) {
+      this.setState({
+        visible: false
+      });
       this.setState({
         color: newProps.color
       });

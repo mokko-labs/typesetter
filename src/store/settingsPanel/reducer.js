@@ -1,6 +1,6 @@
 
 const INITIAL_STATE = {
-  type: 'Body/Base',
+  type: 'BASE',
 }
 
 export const settingsPanel = (state = INITIAL_STATE, action) => {
