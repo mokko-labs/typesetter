@@ -8,6 +8,7 @@ import { SketchPicker } from 'react-color';
 const PickerWrapper = styled.span`
   display:inline-block;
   position: relative;
+  margin-top: 3px;
 `;
 
 const PickerButton = styled.span`
@@ -17,18 +18,31 @@ const PickerButton = styled.span`
   border-radius: 50%;
   border:1px solid #d2d2d2;
   vertical-align: middle;
+  box-shadow: inset 0px 0px 8px -1px rgba(0, 0, 0, 0.15);
+  border:1px solid rgba(105, 105, 105, 0.23);
 `;
 const PickerContainer = styled.span`
   display: inline-block;
   position: absolute;
   bottom: 70px;
   left: 50%;
+  z-index: 1;
   transform: translate(-50%, 0);
+`;
+const PickerCloseLayer = styled.div`
+  content: '';
+  position: fixed;
+  top:0;
+  left:0;
+  bottom: 70px;
+  opacity: 0;
+  width: 100%;
+  z-index: 0;
 `;
 const PickerLabel = styled.span`
   font-size: 13px;
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 5px;
   color: #616161;
   min-width: 70px;
   vertical-align: middle;
@@ -88,6 +102,7 @@ class Header extends Component {
         <PickerLabel>
           {this.state.color.toString()}
         </PickerLabel>
+        <PickerCloseLayer style={{display: this.state.visible ? 'block' : 'none'}} onClick={ () => this.togglePicker() } />
       </PickerWrapper>
     )
   }
