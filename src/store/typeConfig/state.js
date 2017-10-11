@@ -5,7 +5,7 @@ const typeState = {
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     fontSize: 16, // px
     fontWeight: 400,
-    backgroundColor: '#fff',
+    backgroundColor: '#d6eef2',
     color:'#000'
   },
   h1: {
@@ -39,10 +39,10 @@ const typeState = {
     fontWeight: 800
   },
   paragraph: {
-    fontSize:  18, // px
-    lineHeight: 28, // px
-    fontWeight: 300,
-    color: '#5a5d60'
+    fontSize:  20, // px
+    lineHeight: 32, // px
+    fontWeight: 400,
+    color: '#333'
   },
   fonts: {
     fetching: false,
