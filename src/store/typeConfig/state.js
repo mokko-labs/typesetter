@@ -41,8 +41,7 @@ const typeState = {
   paragraph: {
     fontSize:  20, // px
     lineHeight: 32, // px
-    fontWeight: 400,
-    color: '#333'
+    fontWeight: 400
   },
   fonts: {
     fetching: false,

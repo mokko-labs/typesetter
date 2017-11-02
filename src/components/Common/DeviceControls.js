@@ -8,6 +8,10 @@ const IconButton = styled.span`
   cursor: pointer;
   margin-left: 10px;
   margin-right: 10px;
+
+  span {
+    line-height: normal;
+  }
 `;
 
 const IconImac = ({ color, active }) =>
